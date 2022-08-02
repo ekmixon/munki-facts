@@ -129,12 +129,7 @@ def is_supported_model():
         u'iMacPro1,1'    
     ]
     current_model = get_current_model()
-    if not current_model:
-        return False
-    elif current_model in supported_models:
-        return True
-    else:
-        return False
+    return bool(current_model and current_model in supported_models)
 
 
 def get_minor_system_version():
@@ -147,12 +142,7 @@ def is_supported_system_version():
     '''Returns True if current macOS version is 10.9 through 10.15,
     False otherwise'''
     macos_minor_version = get_minor_system_version()
-    if macos_minor_version >= 16:
-        return False
-    elif macos_minor_version >= 9:
-        return True
-    else:
-        return False
+    return macos_minor_version < 16 and macos_minor_version >= 9
 
 
 def get_board_id():
@@ -249,11 +239,11 @@ def fact():
 
 if __name__ == '__main__':
     # Debug/testing output when run directly
-    print('is_virtual_machine:          %s' % is_virtual_machine())
-    print('get_current_model:           %s' % get_current_model())
-    print('is_supported_model:          %s' % is_supported_model())
-    print('get_minor_system_version:    %s' % get_minor_system_version())
-    print('is_supported_system_version: %s' % is_supported_system_version())
-    print('get_board_id:                %s' % get_board_id())
-    print('is_supported_board_id:       %s' % is_supported_board_id())
+    print(f'is_virtual_machine:          {is_virtual_machine()}')
+    print(f'get_current_model:           {get_current_model()}')
+    print(f'is_supported_model:          {is_supported_model()}')
+    print(f'get_minor_system_version:    {get_minor_system_version()}')
+    print(f'is_supported_system_version: {is_supported_system_version()}')
+    print(f'get_board_id:                {get_board_id()}')
+    print(f'is_supported_board_id:       {is_supported_board_id()}')
     print(fact())

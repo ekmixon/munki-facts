@@ -25,21 +25,22 @@ def main():
     fact_files = [
         os.path.splitext(name)[0]
         for name in os.listdir(module_dir)
-        if name.endswith('.py') and not name == '__init__.py']
+        if name.endswith('.py') and name != '__init__.py'
+    ]
+
 
     for name in fact_files:
         # load each file and call its fact() function
-        file_path = os.path.join(module_dir, name + '.py')
+        file_path = os.path.join(module_dir, f'{name}.py')
         try:
             # Python 3.4 and higher only
             spec = importlib.util.spec_from_file_location(name, file_path)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
-            facts.update(module.fact())
-        # pylint: disable=broad-except
+            facts |= module.fact()
         except BaseException as err:
-            print(u'Error %s in file %s' % (err, file_path), file=sys.stderr)
-        # pylint: enable=broad-except
+            print(f'Error {err} in file {file_path}', file=sys.stderr)
+            # pylint: enable=broad-except
 
     if facts:
         # Handle cases when facts return None - convert them to empty

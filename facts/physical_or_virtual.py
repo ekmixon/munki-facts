@@ -22,10 +22,7 @@ def sysctl(name, is_string=True):
     buf = create_string_buffer(size.value)
     # Re-run, but provide the buffer
     libc.sysctlbyname(name, buf, byref(size), None, 0)
-    if is_string:
-        return buf.value
-    else:
-        return buf.raw
+    return buf.value if is_string else buf.raw
 
 
 def is_virtual_machine():

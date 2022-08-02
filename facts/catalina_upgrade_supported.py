@@ -144,10 +144,7 @@ def is_supported_model():
         'Xserve3,1',
         ]
     current_model = get_current_model()
-    if current_model in non_supported_models:
-        return False
-    else:
-        return True
+    return current_model not in non_supported_models
 
 
 def get_minor_system_version():
@@ -160,12 +157,7 @@ def is_supported_system_version():
     '''Returns True if current macOS version is 10.9 through 10.14,
     False otherwise'''
     macos_minor_version = get_minor_system_version()
-    if macos_minor_version >= 15:
-        return False
-    elif macos_minor_version >= 9:
-        return True
-    else:
-        return False
+    return macos_minor_version < 15 and macos_minor_version >= 9
 
 
 def get_board_id():
@@ -251,10 +243,7 @@ def is_supported_board_id():
         'Mac-FFE5EF870D7BA81A',
         ]
     board_id = get_board_id()
-    if board_id in platform_support_values:
-        return True
-    else:
-        return False
+    return board_id in platform_support_values
 
 
 def fact():
@@ -269,11 +258,11 @@ def fact():
 
 if __name__ == '__main__':
     # Debug/testing output when run directly
-    print('is_virtual_machine:          %s' % is_virtual_machine())
-    print('get_current_model:           %s' % get_current_model())
-    print('is_supported_model:          %s' % is_supported_model())
-    print('get_minor_system_version:    %s' % get_minor_system_version())
-    print('is_supported_system_version: %s' % is_supported_system_version())
-    print('get_board_id:                %s' % get_board_id())
-    print('is_supported_board_id:       %s' % is_supported_board_id())
+    print(f'is_virtual_machine:          {is_virtual_machine()}')
+    print(f'get_current_model:           {get_current_model()}')
+    print(f'is_supported_model:          {is_supported_model()}')
+    print(f'get_minor_system_version:    {get_minor_system_version()}')
+    print(f'is_supported_system_version: {is_supported_system_version()}')
+    print(f'get_board_id:                {get_board_id()}')
+    print(f'is_supported_board_id:       {is_supported_board_id()}')
     print(fact())

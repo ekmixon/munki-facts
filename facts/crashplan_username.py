@@ -9,7 +9,7 @@ def fact():
     username = ''
     try:
         with open(cp_identity_file) as identity:
-            for line in identity.readlines():
+            for line in identity:
                 if line.startswith('username='):
                     username = line.partition('=')[2].rstrip()
                     break
